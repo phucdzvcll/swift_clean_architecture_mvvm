@@ -8,9 +8,11 @@
 import Foundation
 
 struct ProductResponsitoryImpl: ProductRepository{
+    
+    
     let productMapper: ProductMapper
     
-    func getListProduct(completeHandle: @escaping ([ProductEntity]) -> Void) {
+    func getListProduct(completeHandle: @escaping ((Either<[ProductEntity]>)) -> Void) {
         print("getListProduct")
         guard let url = URL(string: "https://fakestoreapi.com/products/") else {
             return
@@ -23,9 +25,9 @@ struct ProductResponsitoryImpl: ProductRepository{
             do{
                 let products = try JSONDecoder().decode([ProductResponse].self, from: data)
                 let productEntities = productMapper.mapList(inpust: products)
-                completeHandle(productEntities)
+                completeHandle(Either.Left(productEntities))
             }catch{
-                print("error: \(error)")
+                completeHandle(Either.Right(UnCatchError(messgage: error.localizedDescription)))
             }
         })
          .resume()

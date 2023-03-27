@@ -22,11 +22,24 @@ struct ProductListView: View {
                         }
                     }
                 }
-            case .error:
-                Text("Some thing went wrong!")
-                    .font(.headline)
-                    .foregroundColor(.red)
-                    .padding()
+            case .error(let error):
+                if(error is UnCatchError){
+                    Text("UnCatchError!")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                        .padding()
+                }else if(error is ServerError){
+                    Text("ServerError!")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                        .padding()
+                }else {
+                    Text("Some thing went wrong!")
+                        .font(.headline)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+                
             }
         }.onAppear{
             viewModel.fetchProduct()

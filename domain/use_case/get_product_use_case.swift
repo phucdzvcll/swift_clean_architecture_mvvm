@@ -12,8 +12,7 @@ struct GetProductUseCase: BaseUseCase{
     let productRepository: ProductRepository
     
     
-    func execute(p: EmptyParam, completeHandle: @escaping ([ProductEntity]) -> Void) {
-        print(print(" execute "))
+    func execute(p: EmptyParam, completeHandle: @escaping (Either<[ProductEntity]>) -> Void) {
         productRepository.getListProduct(completeHandle: completeHandle)
     }
     

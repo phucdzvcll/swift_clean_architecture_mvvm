@@ -7,7 +7,7 @@ class ProductViewModel: ObservableObject{
             case idle
             case loading
             case success([ProductEntity])
-            case error
+            case error(Failure)
         }
     @Published var state: State = .idle
     
@@ -20,11 +20,16 @@ class ProductViewModel: ObservableObject{
     
     func fetchProduct(){
         state = .loading
-        print(" fetchProduct ")
-        dependency.getProductUseCase.execute(p: EmptyParam(), completeHandle: {[weak self]
+        dependency.getProductUseCase.execute(p: EmptyParam(), completeHandle: {
+            [weak self]
             result in
             DispatchQueue.main.async {
-                self?.state = .success(result)
+                switch result{
+                case .Left(let user):
+                    self?.state = .success(user)
+                case .Right(let error):
+                    self?.state = .error(error)
+                }
             }
         })
     }

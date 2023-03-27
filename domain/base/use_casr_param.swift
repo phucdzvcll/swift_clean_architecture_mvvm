@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol UseCaseParam{
-    
-}
+protocol UseCaseParam{}
 
-public struct EmptyParam: UseCaseParam {
-    
-}
+public struct EmptyParam: UseCaseParam {}

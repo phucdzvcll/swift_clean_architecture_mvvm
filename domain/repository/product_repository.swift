@@ -8,5 +8,5 @@
 import Foundation
 
 protocol ProductRepository {
-    func getListProduct(completeHandle: @escaping ([ProductEntity])->Void)
+    func getListProduct(completeHandle: @escaping (Either<[ProductEntity]>)->Void)
 }
